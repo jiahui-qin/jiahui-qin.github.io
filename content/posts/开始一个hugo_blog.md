@@ -31,3 +31,9 @@ echo "theme = 'ananke'" >> config.toml
 最后这个echo windows下可能有问题，自己手动添加比较保险
 
 另外默认给的这个主题看着还行，先用用。
+
+接下来试试怎么写新文章：
+
+```
+hugo server --buildDrafts
+hugo server -D

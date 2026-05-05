@@ -1,4 +1,39 @@
-baseURL = 'http://example.org/'
-languageCode = 'en-us'
-title = 'My New Hugo Site'
+baseURL = 'https://blog.example.com/'
+languageCode = 'zh-cn'
+title = '我的技术博客'
 theme = 'coder'
+defaultContentLanguage = 'zh-cn'
+enableRobotsTXT = true
+paginate = 10
+
+[params]
+  author = '技术爱好者'
+  description = '记录技术成长，分享编程心得'
+  info = '热爱技术，专注于 Go、Java、DevOps'
+
+[languages]
+  [languages.zh-cn]
+    languageName = '中文'
+    weight = 1
+
+[menu]
+  [[menu.main]]
+    name = '首页'
+    url = '/'
+    weight = 1
+  [[menu.main]]
+    name = '归档'
+    url = '/posts/'
+    weight = 2
+  [[menu.main]]
+    name = '分类'
+    url = '/categories/'
+    weight = 3
+  [[menu.main]]
+    name = '标签'
+    url = '/tags/'
+    weight = 4
+  [[menu.main]]
+    name = '关于'
+    url = '/about/'
+    weight = 5

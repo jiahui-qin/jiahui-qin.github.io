@@ -1,39 +1,94 @@
-baseURL = 'https://blog.example.com/'
-languageCode = 'zh-cn'
+baseURL = 'https://jiahui-qin.github.io/'
 title = '我的技术博客'
-theme = 'coder'
+theme = 'PaperMod'
+languageCode = 'zh-cn'
 defaultContentLanguage = 'zh-cn'
+
 enableRobotsTXT = true
-paginate = 10
+buildDrafts = false
+buildFuture = false
+buildExpired = false
+
+[minify]
+  disableXML = true
+  minifyOutput = true
+
+[pagination]
+  pagerSize = 10
 
 [params]
+  env = 'production'
   author = '技术爱好者'
   description = '记录技术成长，分享编程心得'
-  info = '热爱技术，专注于 Go、Java、DevOps'
+  
+  ShowReadingTime = true
+  ShowShareButtons = true
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+  ShowWordCount = true
+  ShowRssButtonInSectionTermList = true
+  
+  UseHugoToc = true
+  disableSpecial1stPost = false
+  disableScrollToTop = false
+  comments = false
+  hidemeta = false
+  hideSummary = false
+  showtoc = false
+  tocopen = false
 
-[languages]
-  [languages.zh-cn]
-    languageName = '中文'
-    weight = 1
+  [params.assets]
+    disableHLJS = true
+    disableFingerprinting = false
+
+  [params.label]
+    text = '首页'
+    iconHeight = 35
+
+  [params.cover]
+    hidden = false
+    hiddenInList = true
+    hiddenInSingle = true
+
+  [[params.socialIcons]]
+    name = 'github'
+    url = 'https://github.com/jiahui-qin'
+
+[taxonomies]
+  category = 'categories'
+  tag = 'tags'
+
+[outputs]
+  home = ['HTML', 'RSS', 'JSON']
 
 [menu]
   [[menu.main]]
-    name = '首页'
-    url = '/'
-    weight = 1
-  [[menu.main]]
-    name = '归档'
-    url = '/posts/'
-    weight = 2
-  [[menu.main]]
+    identifier = 'categories'
     name = '分类'
     url = '/categories/'
-    weight = 3
+    weight = 10
+  
   [[menu.main]]
+    identifier = 'tags'
     name = '标签'
     url = '/tags/'
-    weight = 4
+    weight = 20
+  
   [[menu.main]]
+    identifier = 'archives'
+    name = '归档'
+    url = '/archives/'
+    weight = 30
+  
+  [[menu.main]]
+    identifier = 'search'
+    name = '搜索'
+    url = '/search/'
+    weight = 40
+  
+  [[menu.main]]
+    identifier = 'about'
     name = '关于'
     url = '/about/'
-    weight = 5
+    weight = 50

@@ -1,17 +1,22 @@
-baseURL = 'https://blog.example.com/'
+baseURL = 'https://jiahui-qin.github.io/'
 languageCode = 'zh-cn'
 title = '我的技术博客'
-theme = 'coder'
+theme = 'PaperMod'
 defaultContentLanguage = 'zh-cn'
 enableRobotsTXT = true
 
-[pagination]
-  pagerSize = 10
-
 [params]
-  author = '技术爱好者'
+  author = 'jiahui-qin'
   description = '记录技术成长，分享编程心得'
-  info = '热爱技术，专注于 Go、Java、DevOps'
+  homeInfoParams = {}
+  ShowReadingTime = true
+  ShowShareButtons = true
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+  ShowWordCount = true
+  ShowRssButton = true
+  ShowTaxonomies = true
 
 [languages]
   [languages.zh-cn]

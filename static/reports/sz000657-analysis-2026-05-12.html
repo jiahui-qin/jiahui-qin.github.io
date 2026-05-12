@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>中钨高新(000657)投资分析报告 - 2026年5月12日</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; max-width: 1080px; margin: 0 auto; padding: 24px; background: #f7f8fa; color: #1f2937; line-height: 1.6; }
+  .header { text-align: center; margin-bottom: 24px; }
+  .header h1 { font-size: 28px; color: #1f2937; margin-bottom: 8px; }
+  .header .subtitle { color: #6b7280; font-size: 14px; }
+  
+  /* 决策卡片 */
+  .decision-card { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 32px; border-radius: 16px; margin-bottom: 24px; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3); }
+  .decision-card.wait { background: linear-gradient(135deg, #6b7280, #4b5563); }
+  .decision-card h1 { font-size: 56px; margin: 0 0 8px 0; letter-spacing: 4px; }
+  .decision-card .tagline { font-size: 18px; opacity: 0.95; margin-bottom: 20px; }
+  .price-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 16px; }
+  .price-item { background: rgba(255,255,255,0.2); padding: 12px; border-radius: 8px; text-align: center; }
+  .price-item .label { font-size: 12px; opacity: 0.8; margin-bottom: 4px; }
+  .price-item .value { font-size: 20px; font-weight: 600; }
+  .badges { display: flex; gap: 12px; margin-top: 16px; justify-content: center; }
+  .badge { padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 500; }
+  .badge.confidence { background: rgba(34, 197, 94, 0.9); }
+  .badge.risk { background: rgba(239, 68, 68, 0.9); }
+  .badge.position { background: rgba(59, 130, 246, 0.9); }
+  
+  /* 图表卡片 */
+  .chart-card { background: white; padding: 24px; border-radius: 12px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .chart-card h2 { margin: 0 0 16px 0; font-size: 18px; color: #1f2937; border-left: 4px solid #3b82f6; padding-left: 12px; }
+  .chart-container { position: relative; height: 300px; }
+  .chart-container.short { height: 250px; }
+  
+  /* 分析区块 */
+  .analysis-section { background: white; padding: 24px; border-radius: 12px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .analysis-section h2 { margin: 0 0 16px 0; font-size: 18px; color: #1f2937; border-left: 4px solid #8b5cf6; padding-left: 12px; }
+  .score-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px; }
+  .score-item { text-align: center; padding: 16px; background: #f9fafb; border-radius: 8px; }
+  .score-item .name { font-size: 13px; color: #6b7280; margin-bottom: 8px; }
+  .score-item .score { font-size: 28px; font-weight: 700; color: #3b82f6; }
+  .score-item .sub { font-size: 11px; color: #9ca3af; margin-top: 4px; }
+  
+  /* 多空对比 */
+  .bull-bear { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .bull-box { background: linear-gradient(135deg, #ecfdf5, #d1fae5); padding: 16px; border-radius: 8px; border-left: 4px solid #10b981; }
+  .bear-box { background: linear-gradient(135deg, #fef2f2, #fee2e2); padding: 16px; border-radius: 8px; border-left: 4px solid #ef4444; }
+  .bull-box h3, .bear-box h3 { font-size: 14px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .bull-box h3 { color: #059669; }
+  .bear-box h3 { color: #dc2626; }
+  .point-list { list-style: none; font-size: 13px; }
+  .point-list li { padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
+  .point-list li:last-child { border-bottom: none; }
+  
+  /* 风险三角 */
+  .risk-spectrum { display: flex; justify-content: space-around; margin: 20px 0; }
+  .risk-option { text-align: center; padding: 16px 24px; border-radius: 8px; min-width: 140px; }
+  .risk-option.aggressive { background: linear-gradient(135deg, #fef3c7, #fde68a); border: 2px solid #f59e0b; }
+  .risk-option.conservative { background: linear-gradient(135deg, #fee2e2, #fecaca); border: 2px solid #ef4444; }
+  .risk-option.neutral { background: linear-gradient(135deg, #e0e7ff, #c7d2fe); border: 2px solid #6366f1; }
+  .risk-option .label { font-size: 12px; color: #6b7280; margin-bottom: 4px; }
+  .risk-option .position { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  .risk-option .pct { font-size: 13px; color: #374151; }
+  
+  /* 交易计划表 */
+  .trade-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .trade-table th, .trade-table td { padding: 12px; text-align: left; border-bottom: 1px solid #e5e7eb; }
+  .trade-table th { background: #f9fafb; font-weight: 600; color: #374151; }
+  .trade-table tr:hover { background: #f9fafb; }
+  .highlight-row { background: #fef3c7 !important; font-weight: 600; }
+  
+  /* 催化剂与风险 */
+  .catalyst-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .catalyst-box, .risk-box { padding: 16px; border-radius: 8px; }
+  .catalyst-box { background: #ecfdf5; border-left: 4px solid #10b981; }
+  .risk-box { background: #fef2f2; border-left: 4px solid #ef4444; }
+  .catalyst-box h4, .risk-box h4 { font-size: 14px; margin-bottom: 12px; }
+  .catalyst-box h4 { color: #059669; }
+  .risk-box h4 { color: #dc2626; }
+  .item-list { list-style: none; font-size: 13px; }
+  .item-list li { padding: 6px 0; }
+  
+  /* 免责声明 */
+  .disclaimer { color: #9ca3af; font-size: 12px; padding: 20px; border-top: 1px solid #e5e7eb; margin-top: 24px; text-align: center; line-height: 1.8; }
+  
+  /* 时间轴 */
+  .timeline { display: flex; justify-content: space-between; margin: 20px 0; position: relative; }
+  .timeline::before { content: ''; position: absolute; top: 20px; left: 10%; right: 10%; height: 3px; background: linear-gradient(90deg, #10b981, #f59e0b, #ef4444); border-radius: 2px; }
+  .timeline-item { text-align: center; position: relative; z-index: 1; }
+  .timeline-item .dot { width: 16px; height: 16px; background: white; border: 3px solid #10b981; border-radius: 50%; margin: 0 auto 8px; }
+  .timeline-item.warning .dot { border-color: #f59e0b; }
+  .timeline-item .period { font-size: 12px; color: #6b7280; }
+  .timeline-item .price { font-size: 16px; font-weight: 600; color: #1f2937; margin-top: 4px; }
+  .timeline-item .return { font-size: 11px; color: #10b981; }
+  
+  @media (max-width: 768px) {
+    .price-grid { grid-template-columns: repeat(2, 1fr); }
+    .bull-bear { grid-template-columns: 1fr; }
+    .catalyst-grid { grid-template-columns: 1fr; }
+    .risk-spectrum { flex-direction: column; align-items: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>📊 中钨高新（000657）投资分析报告</h1>
+  <div class="subtitle">分析日期：2026年5月12日 | 数据来源：NeoData金融数据服务</div>
+</div>
+
+<!-- 决策卡片 -->
+<div class="decision-card wait">
+  <h1>WAIT</h1>
+  <div class="tagline">观望等待 — 暂不建仓，等待钨价企稳信号</div>
+  <div class="price-grid">
+    <div class="price-item">
+      <div class="label">当前价</div>
+      <div class="value">59.29元</div>
+    </div>
+    <div class="price-item">
+      <div class="label">建议仓位</div>
+      <div class="value">0%</div>
+    </div>
+    <div class="price-item">
+      <div class="label">入场条件</div>
+      <div class="value">50-52元</div>
+    </div>
+    <div class="price-item">
+      <div class="label">止损价</div>
+      <div class="value">45元</div>
+    </div>
+  </div>
+  <div class="badges">
+    <span class="badge confidence">信心水平：中</span>
+    <span class="badge risk">风险等级：高</span>
+    <span class="badge position">已持仓建议：持有不追</span>
+  </div>
+</div>
+
+<!-- 四维评分雷达图 -->
+<div class="chart-card">
+  <h2>📡 综合评分雷达图</h2>
+  <div class="chart-container">
+    <canvas id="radarChart"></canvas>
+  </div>
+</div>
+
+<!-- 价格走势图 -->
+<div class="chart-card">
+  <h2>📈 价格走势与目标价位</h2>
+  <div class="chart-container">
+    <canvas id="priceChart"></canvas>
+  </div>
+</div>
+
+<!-- 多空论点对比 -->
+<div class="chart-card">
+  <h2>⚖️ 多空论点对比</h2>
+  <div class="chart-container short">
+    <canvas id="bullBearChart"></canvas>
+  </div>
+  <div class="bull-bear" style="margin-top: 20px;">
+    <div class="bull-box">
+      <h3>🟢 多头核心论点</h3>
+      <ul class="point-list">
+        <li>Q1净利润预增256%-276%，业绩爆发</li>
+        <li>五矿承诺三家矿山注入，储量+83%</li>
+        <li>AI+PCB带动高端微钻需求爆发</li>
+        <li>龙虎榜主力净买入3.65亿元</li>
+      </ul>
+    </div>
+    <div class="bear-box">
+      <h3>🔴 空头核心论点</h3>
+      <ul class="point-list">
+        <li>钨价从103万跌至68万(-35%)，核心假设被推翻</li>
+        <li>PE超100倍，PB 12.8倍，估值泡沫</li>
+        <li>经营现金流仅3.89亿 vs 净利12.81亿</li>
+        <li>主力净流出12亿，大宗折价18%</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- 风险评估三角 -->
+<div class="chart-card">
+  <h2>🎯 三方风险评估</h2>
+  <div class="chart-container short">
+    <canvas id="riskRadarChart"></canvas>
+  </div>
+  <div class="risk-spectrum">
+    <div class="risk-option aggressive">
+      <div class="label">激进派</div>
+      <div class="position">强烈买入</div>
+      <div class="pct">仓位：40-50%</div>
+    </div>
+    <div class="risk-option neutral">
+      <div class="label">中性派</div>
+      <div class="position">分批建仓</div>
+      <div class="pct">仓位：25%</div>
+    </div>
+    <div class="risk-option conservative">
+      <div class="label">保守派</div>
+      <div class="position">建议回避</div>
+      <div class="pct">仓位：0-10%</div>
+    </div>
+  </div>
+</div>
+
+<!-- 四维分析摘要 -->
+<div class="analysis-section">
+  <h2>📋 四维分析摘要</h2>
+  <div class="score-grid">
+    <div class="score-item">
+      <div class="name">技术面</div>
+      <div class="score">7.5</div>
+      <div class="sub">多头格局，短期回调</div>
+    </div>
+    <div class="score-item">
+      <div class="name">基本面</div>
+      <div class="score">6.85</div>
+      <div class="sub">估值偏高，成长良好</div>
+    </div>
+    <div class="score-item">
+      <div class="name">新闻面</div>
+      <div class="score">8.0</div>
+      <div class="sub">多项利好共振</div>
+    </div>
+    <div class="score-item">
+      <div class="name">情绪面</div>
+      <div class="score">5.5</div>
+      <div class="sub">多空博弈，偏谨慎</div>
+    </div>
+  </div>
+  <table class="trade-table">
+    <thead>
+      <tr>
+        <th>分析维度</th>
+        <th>关键数据</th>
+        <th>核心结论</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>技术分析</td>
+        <td>当前价59.29，布林中轨55.79</td>
+        <td>处于上升通道内，旗形整理，支撑58.22元</td>
+      </tr>
+      <tr>
+        <td>基本面</td>
+        <td>2025净利12.81亿(+29%)，Q1预增256%</td>
+        <td>盈利能力良好，但PE>100x估值偏高</td>
+      </tr>
+      <tr>
+        <td>新闻政策</td>
+        <td>钨价103万/吨，矿山注入预期</td>
+        <td>行业景气，但钨价已回调至68万/吨</td>
+      </tr>
+      <tr>
+        <td>市场情绪</td>
+        <td>主力流出12亿，北向增持1300万股</td>
+        <td>多空博弈，筹码分散至14.9万户</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 交易计划 -->
+<div class="analysis-section">
+  <h2>📝 交易计划</h2>
+  <div class="timeline">
+    <div class="timeline-item warning">
+      <div class="dot"></div>
+      <div class="period">当前</div>
+      <div class="price">59.29元</div>
+      <div class="return">观望</div>
+    </div>
+    <div class="timeline-item">
+      <div class="dot"></div>
+      <div class="period">入场区</div>
+      <div class="price">50-52元</div>
+      <div class="return">等待回调</div>
+    </div>
+    <div class="timeline-item">
+      <div class="dot"></div>
+      <div class="period">短期目标</div>
+      <div class="price">62元</div>
+      <div class="return">+23%</div>
+    </div>
+    <div class="timeline-item">
+      <div class="dot"></div>
+      <div class="period">中期目标</div>
+      <div class="price">72元</div>
+      <div class="return">+39%</div>
+    </div>
+    <div class="timeline-item">
+      <div class="dot"></div>
+      <div class="period">长期目标</div>
+      <div class="price">85元</div>
+      <div class="return">+68%</div>
+    </div>
+  </div>
+  <table class="trade-table">
+    <thead>
+      <tr>
+        <th>项目</th>
+        <th>建议</th>
+        <th>说明</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="highlight-row">
+        <td>建仓决策</td>
+        <td>WAIT（等待）</td>
+        <td>暂不建仓，等待钨价企稳信号</td>
+      </tr>
+      <tr>
+        <td>入场条件</td>
+        <td>满足至少2条</td>
+        <td>钨价站稳65万/吨、股价回踩50-52元、主力连续3日净流入5000万+</td>
+      </tr>
+      <tr>
+        <td>建仓仓位</td>
+        <td>10-15%</td>
+        <td>平衡型投资者，验证企稳后分批建仓</td>
+      </tr>
+      <tr>
+        <td>止损设置</td>
+        <td>45元</td>
+        <td>无条件离场，保留本金</td>
+      </tr>
+      <tr>
+        <td>已持仓者</td>
+        <td>持有不追</td>
+        <td>不急于加仓，跌破55元考虑减仓</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 催化剂与风险 -->
+<div class="catalyst-grid">
+  <div class="catalyst-box">
+    <h4>⭐ 关键催化剂（看多信号）</h4>
+    <ul class="item-list">
+      <li>• 钨价连续2周企稳65万/吨以上</li>
+      <li>• 股价放量突破62元+主力净流入</li>
+      <li>• 国家收储或出口管制政策加码</li>
+      <li>• 中报净利润同比增超30%</li>
+      <li>• 矿山注入方案正式公告</li>
+    </ul>
+  </div>
+  <div class="risk-box">
+    <h4>⚠️ 主要风险（看空信号）</h4>
+    <ul class="item-list">
+      <li>• 钨价跌破60万/吨且无反弹</li>
+      <li>• 季报净利润环比下滑超20%</li>
+      <li>• 大股东/高管减持</li>
+      <li>• 经营现金流连续两季为负</li>
+      <li>• 主力资金持续净流出</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 免责声明 -->
+<div class="disclaimer">
+  <strong>⚠️ 免责声明</strong><br>
+  本报告由AI基于公开信息整理生成，仅供参考，不构成任何投资建议或个股推荐。投资有风险，决策需谨慎。<br>
+  股票投资存在本金损失的可能，过往业绩不代表未来表现。请投资者根据自身风险承受能力做出独立判断。<br>
+  <br>
+  <strong>数据来源</strong>：NeoData金融数据服务 | <strong>报告生成时间</strong>：2026年5月12日
+</div>
+
+<script>
+// Chart.js 全局配置
+Chart.defaults.font.family = "-apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif";
+Chart.defaults.color = '#6b7280';
+
+// 1. 四维评分雷达图
+const radarCtx = document.getElementById('radarChart').getContext('2d');
+new Chart(radarCtx, {
+  type: 'radar',
+  data: {
+    labels: ['技术面', '基本面', '新闻面', '情绪面', '风险控制'],
+    datasets: [{
+      label: '中钨高新(000657)',
+      data: [7.5, 6.85, 8.0, 5.5, 4.0],
+      backgroundColor: 'rgba(59, 130, 246, 0.2)',
+      borderColor: 'rgba(59, 130, 246, 1)',
+      borderWidth: 2,
+      pointBackgroundColor: 'rgba(59, 130, 246, 1)',
+      pointBorderColor: '#fff',
+      pointRadius: 5
+    }, {
+      label: '行业平均',
+      data: [6.0, 6.5, 6.0, 6.0, 6.0],
+      backgroundColor: 'rgba(107, 114, 128, 0.1)',
+      borderColor: 'rgba(107, 114, 128, 0.5)',
+      borderWidth: 1,
+      borderDash: [5, 5],
+      pointRadius: 0
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      r: {
+        beginAtZero: true,
+        max: 10,
+        ticks: { stepSize: 2 },
+        grid: { color: 'rgba(0,0,0,0.05)' },
+        angleLines: { color: 'rgba(0,0,0,0.05)' }
+      }
+    },
+    plugins: {
+      legend: { position: 'bottom' }
+    }
+  }
+});
+
+// 2. 价格走势图
+const priceCtx = document.getElementById('priceChart').getContext('2d');
+new Chart(priceCtx, {
+  type: 'line',
+  data: {
+    labels: ['12-31', '01-02', '01-15', '02-01', '02-15', '03-01', '03-15', '04-01', '04-15', '04-28', '05-04', '05-07', '05-11', '05-12'],
+    datasets: [{
+      label: '收盘价',
+      data: [27.71, 29.50, 35.20, 42.80, 48.50, 55.30, 62.10, 58.80, 45.60, 52.10, 57.31, 64.31, 60.64, 59.29],
+      borderColor: '#3b82f6',
+      backgroundColor: 'rgba(59, 130, 246, 0.1)',
+      fill: true,
+      tension: 0.3,
+      pointRadius: 3,
+      pointHoverRadius: 6
+    }, {
+      label: 'MA20',
+      data: [null, null, null, null, null, null, null, null, 48.50, 50.20, 52.80, 55.79, 57.00, 55.79],
+      borderColor: '#10b981',
+      borderWidth: 2,
+      borderDash: [5, 5],
+      fill: false,
+      tension: 0.3,
+      pointRadius: 0
+    }, {
+      label: 'MA60',
+      data: [null, null, null, null, null, null, null, null, null, null, 48.00, 50.50, 53.00, 54.74],
+      borderColor: '#f59e0b',
+      borderWidth: 2,
+      borderDash: [5, 5],
+      fill: false,
+      tension: 0.3,
+      pointRadius: 0
+    }, {
+      label: '目标价(72)',
+      data: Array(14).fill(72),
+      borderColor: 'rgba(16, 185, 129, 0.5)',
+      borderWidth: 1,
+      borderDash: [10, 5],
+      fill: false,
+      pointRadius: 0
+    }, {
+      label: '止损价(45)',
+      data: Array(14).fill(45),
+      borderColor: 'rgba(239, 68, 68, 0.5)',
+      borderWidth: 1,
+      borderDash: [10, 5],
+      fill: false,
+      pointRadius: 0
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: { intersect: false, mode: 'index' },
+    scales: {
+      y: {
+        min: 20,
+        max: 80,
+        grid: { color: 'rgba(0,0,0,0.05)' }
+      },
+      x: { grid: { display: false } }
+    },
+    plugins: {
+      legend: { position: 'bottom', labels: { usePointStyle: true } },
+      tooltip: {
+        callbacks: {
+          afterLabel: function(context) {
+            if (context.datasetIndex === 0) {
+              const returns = ((context.raw - 59.29) / 59.29 * 100).toFixed(1);
+              return '当前涨跌: ' + returns + '%';
+            }
+            return '';
+          }
+        }
+      }
+    }
+  }
+});
+
+// 3. 多空论点对比图
+const bullBearCtx = document.getElementById('bullBearChart').getContext('2d');
+new Chart(bullBearCtx, {
+  type: 'bar',
+  data: {
+    labels: ['业绩增长', '行业前景', '政策支持', '资金流向', '估值水平'],
+    datasets: [{
+      label: '多头评分',
+      data: [9, 8, 8, 5, 3],
+      backgroundColor: 'rgba(16, 185, 129, 0.7)',
+      borderColor: '#10b981',
+      borderWidth: 1
+    }, {
+      label: '空头评分',
+      data: [7, 6, 5, 8, 9],
+      backgroundColor: 'rgba(239, 68, 68, 0.7)',
+      borderColor: '#ef4444',
+      borderWidth: 1
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    indexAxis: 'y',
+    scales: {
+      x: {
+        min: 0,
+        max: 10,
+        grid: { color: 'rgba(0,0,0,0.05)' }
+      },
+      y: { grid: { display: false } }
+    },
+    plugins: {
+      legend: { position: 'top' }
+    }
+  }
+});
+
+// 4. 风险评估雷达图
+const riskCtx = document.getElementById('riskRadarChart').getContext('2d');
+new Chart(riskCtx, {
+  type: 'radar',
+  data: {
+    labels: ['估值风险', '基本面风险', '商品风险', '资金面风险', '筹码面风险'],
+    datasets: [{
+      label: '激进派评分',
+      data: [4, 5, 5, 5, 4],
+      backgroundColor: 'rgba(245, 158, 11, 0.2)',
+      borderColor: 'rgba(245, 158, 11, 1)',
+      borderWidth: 2,
+      pointRadius: 4
+    }, {
+      label: '中性派评分',
+      data: [6, 6, 6, 7, 7],
+      backgroundColor: 'rgba(99, 102, 241, 0.2)',
+      borderColor: 'rgba(99, 102, 241, 1)',
+      borderWidth: 2,
+      pointRadius: 4
+    }, {
+      label: '保守派评分',
+      data: [9, 7, 8, 8, 9],
+      backgroundColor: 'rgba(239, 68, 68, 0.2)',
+      borderColor: 'rgba(239, 68, 68, 1)',
+      borderWidth: 2,
+      pointRadius: 4
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      r: {
+        beginAtZero: true,
+        max: 10,
+        ticks: { stepSize: 2 },
+        grid: { color: 'rgba(0,0,0,0.05)' }
+      }
+    },
+    plugins: {
+      legend: { position: 'bottom' }
+    }
+  }
+});
+</script>
+
+</body>
+</html>

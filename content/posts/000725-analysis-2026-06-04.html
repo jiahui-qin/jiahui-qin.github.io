@@ -1,0 +1,483 @@
+---
+title: "京东方A(000725) 投资分析报告 - 2026-06-04"
+date: 2026-06-04T09:47:00+08:00
+draft: false
+description: "京东方A(000725) 投资分析报告，包含技术面、基本面、新闻面、情绪面综合评分，最终决策：SELL（分批减仓）"
+tags: ["股票分析", "京东方A", "000725", "交易决策", "量化投资"]
+categories: ["投资"]
+---
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; max-width: 1080px; margin:0 auto; padding: 24px; background: #f7f8fa; color: #1f2937; }
+  .decision-card { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; padding: 32px; border-radius: 16px; margin-bottom: 24px; }
+  .decision-card.buy { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
+  .decision-card.sell { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); }
+  .decision-card.hold { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
+  .decision-card h1 { font-size: 48px; margin: 0 0 8px 0; }
+  .decision-card .subtitle { font-size: 18px; opacity: 0.9; }
+  .badge-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 20px; }
+  .badge { background: rgba(255,255,255,0.2); padding: 14px; border-radius: 10px; text-align: center; }
+  .badge .label { font-size: 12px; opacity: 0.8; }
+  .badge .value { font-size: 22px; font-weight: 700; margin-top: 4px; }
+  .chart-card { background: white; padding: 24px; border-radius: 12px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+  .chart-card h2 { margin-top: 0; font-size: 18px; color: #1f2937; border-left: 4px solid #3b82f6; padding-left: 12px; }
+  .chart-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 700px) { .chart-row { grid-template-columns: 1fr; } .badge-grid { grid-template-columns: repeat(2, 1fr); } }
+  .detail-section { margin-top: 20px; }
+  .detail-section h3 { font-size: 15px; color: #374151; margin: 16px 0 8px 0; }
+  .detail-section ul { margin: 0; padding-left: 20px; }
+  .detail-section li { margin-bottom: 6px; font-size: 14px; line-height: 1.6; }
+  .arg-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .arg-table th { background: #f3f4f6; padding: 8px 12px; text-align: left; font-weight: 600; }
+  .arg-table td { padding: 8px 12px; border-bottom: 1px solid #f3f4f6; }
+  .arg-bull { border-left: 3px solid #10b981; }
+  .arg-bear { border-left: 3px solid #ef4444; }
+  .disclaimer { color: #6b7280; font-size: 13px; padding: 16px; border-top: 1px solid #e5e7eb; margin-top: 24px; line-height: 1.6; }
+  .score-bar { display: flex; align-items: center; margin: 6px 0; }
+  .score-bar .dim { width: 80px; font-size: 13px; color: #6b7280; }
+  .score-bar .bar-bg { flex: 1; height: 12px; background: #f3f4f6; border-radius: 6px; overflow: hidden; margin: 0 10px; }
+  .score-bar .bar-fill { height: 100%; border-radius: 6px; }
+  .score-bar .score-num { width: 30px; font-size: 13px; font-weight: 600; }
+  .collapse-toggle { cursor: pointer; user-select: none; }
+  .collapse-content { overflow: hidden; transition: max-height 0.3s ease; }
+  .price-annotation { font-size: 11px; color: #6b7280; margin-top: 4px; }
+</style>
+
+<!-- 1. 决策卡片 -->
+<div class="decision-card sell">
+  <div class="subtitle">京东方A · 000725.SZ · 最终交易决策</div>
+  <h1>🔴 SELL</h1>
+  <div class="subtitle" style="margin-top:8px">分批减仓 · 建议仓位 30%</div>
+  <div class="badge-grid">
+    <div class="badge">
+      <div class="label">信心水平</div>
+      <div class="value">中</div>
+    </div>
+    <div class="badge">
+      <div class="label">风险等级</div>
+      <div class="value">中高</div>
+    </div>
+    <div class="badge">
+      <div class="label">第一批出场价</div>
+      <div class="value">5.50-5.70</div>
+    </div>
+    <div class="badge">
+      <div class="label">止损价</div>
+      <div class="value">5.00 / 4.80</div>
+    </div>
+  </div>
+</div>
+
+<!-- 2. 综合评分雷达图 -->
+<div class="chart-card">
+  <h2>📊 综合评分</h2>
+  <div class="chart-row">
+    <div>
+      <canvas id="radarChart" width="400" height="350"></canvas>
+    </div>
+    <div style="padding-top:40px">
+      <div class="score-bar"><div class="dim">技术面</div><div class="bar-bg"><div class="bar-fill" style="width:40%;background:#3b82f6"></div></div><div class="score-num">4</div></div>
+      <div class="score-bar"><div class="dim">基本面</div><div class="bar-bg"><div class="bar-fill" style="width:40%;background:#10b981"></div></div><div class="score-num">4</div></div>
+      <div class="score-bar"><div class="dim">新闻面</div><div class="bar-bg"><div class="bar-fill" style="width:55%;background:#f59e0b"></div></div><div class="score-num">5.5</div></div>
+      <div class="score-bar"><div class="dim">情绪面</div><div class="bar-bg"><div class="bar-fill" style="width:50%;background:#ef4444"></div></div><div class="score-num">5</div></div>
+      <div class="score-bar"><div class="dim">风险面</div><div class="bar-bg"><div class="bar-fill" style="width:35%;background:#8b5cf6"></div></div><div class="score-num">3.5</div></div>
+      <div style="margin-top:16px;font-size:13px;color:#6b7280">评分说明：技术面（RSI超买回调压力）、基本面（PE偏高ROE偏低）、新闻面（OLED概念有想象力但短期难兑现）、情绪面（5月26日跌停后分歧加大）、风险面（面板周期下行+估值回归风险）</div>
+    </div>
+  </div>
+</div>
+
+<!-- 3. 价格走势图 -->
+<div class="chart-card">
+  <h2>📈 价格走势与操作参考</h2>
+  <div style="font-size:13px;color:#6b7280;margin-bottom:8px">近60个交易日K线收盘价 · 叠加SMA20/SMA60均线 · 标注操作价位</div>
+  <canvas id="priceChart" width="1000" height="420"></canvas>
+  <div class="price-annotation">🟢 绿虚线：目标价（回调目标 5.00-5.20）| 🔴 红虚线：止损价（5.00 / 4.80）| 🔵 蓝线：SMA20 | 🟣 紫线：SMA60</div>
+</div>
+
+<!-- 4. 多空论点对比图 -->
+<div class="chart-card">
+  <h2>⚖️ 多空论点对比</h2>
+  <div class="chart-row">
+    <div>
+      <canvas id="bullChart" width="400" height="350"></canvas>
+    </div>
+    <div>
+      <canvas id="bearChart" width="400" height="350"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- 5. 风险评估三角图 -->
+<div class="chart-card">
+  <h2>📋 风险评估三方论证</h2>
+  <div class="chart-row">
+    <div>
+      <canvas id="riskRadar" width="400" height="350"></canvas>
+    </div>
+    <div style="padding-top:30px;font-size:14px;line-height:1.8">
+      <div style="margin-bottom:12px"><span style="color:#ef4444;font-weight:700">激进派</span>：建议BUY，仓位80-100%，OLED业务是核心上行催化剂，当前是布局窗口</div>
+      <div style="margin-bottom:12px"><span style="color:#10b981;font-weight:700">保守派</span>：建议SELL，仓位0%，技术面转弱+估值过高，应完全清仓规避下行风险</div>
+      <div style="margin-bottom:12px"><span style="color:#f59e0b;font-weight:700">中性派</span>：建议SELL（分批减仓），仓位20-40%，平衡风险与机会，避免极端决策</div>
+      <div style="margin-top:16px;padding:10px;background:#fef3c7;border-radius:8px;font-size:13px"><span style="font-weight:700">风险主管裁决</span>：采纳<span style="color:#f59e0b;font-weight:700">中性派</span>立场，最终决策 SELL（分批减仓），建议仓位 <span style="font-weight:700">30%</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- 6. 详细分析文本区 -->
+<div class="chart-card">
+  <h2>📝 详细分析报告</h2>
+  
+  <div class="detail-section">
+    <h3 class="collapse-toggle" onclick="toggleCollapse('tech-detail')">📈 技术面分析 <span style="font-size:12px;color:#6b7280">（点击展开/折叠）</span></h3>
+    <div id="tech-detail" class="collapse-content" style="max-height:500px">
+      <ul>
+        <li><strong>当前价格</strong>：5.59元（2026-06-03收盘），今日（06-04）参考价5.60元</li>
+        <li><strong>均线系统</strong>：MA10=5.38元（支撑），MA20=4.80元（强支撑），MA60≈4.30元</li>
+        <li><strong>RSI_6</strong>：76.76（超买区域，回调压力显著）</li>
+        <li><strong>MACD</strong>：DIF=0.33，DEA=0.27，红柱缩短（上涨动能减弱）</li>
+        <li><strong>关键事件</strong>：5月26日跌停（收盘价5.77→5.18区间），技术面明确转弱信号</li>
+        <li><strong>成交量</strong>：5月26-27日放量下跌（成交量51M手），主力出货迹象明显</li>
+        <li><strong>结论</strong>：短期超买回调压力明确，建议减仓等待更好的买入时机</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="detail-section">
+    <h3 class="collapse-toggle" onclick="toggleCollapse('fund-detail')">🏢 基本面分析 <span style="font-size:12px;color:#6b7280">（点击展开/折叠）</span></h3>
+    <div id="fund-detail" class="collapse-content" style="max-height:500px">
+      <ul>
+        <li><strong>PE(TTM)</strong>：34.80x（显著高于行业均值15-20x，估值偏高）</li>
+        <li><strong>ROE</strong>：4.63%（盈利能力偏弱，低于电子行业优秀公司10%+水平）</li>
+        <li><strong>毛利率</strong>：17.58%（面板行业周期底部，盈利空间被压缩）</li>
+        <li><strong>营收规模</strong>：超2000亿（全球面板产能第一，但增收不增利）</li>
+        <li><strong>OLED业务</strong>：成都AMOLED产线2026下半年投产，短期无法贡献显著利润（产能爬坡需1-2年）</li>
+        <li><strong>苹果供应链</strong>：认证难度被高估，短期切入可能性低</li>
+        <li><strong>结论</strong>：估值与盈利能力不匹配，安全边际不足，中长期需观察OLED业务进展</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="detail-section">
+    <h3 class="collapse-toggle" onclick="toggleCollapse('news-detail')">📰 新闻面分析 <span style="font-size:12px;color:#6b7280">（点击展开/折叠）</span></h3>
+    <div id="news-detail" class="collapse-content" style="max-height:500px">
+      <ul>
+        <li><strong>OLED概念</strong>：成都AMOLED产线2026下半年投产，是近期最重要的上行催化剂，但短期利润贡献有限</li>
+        <li><strong>面板价格</strong>：TV 55寸面板价格已跌破$110（前期高点$150+），行业周期处于下行阶段</li>
+        <li><strong>机构态度</strong>：机构目标价4.81元，低于当前价13.95%，主流机构认为当前估值偏高</li>
+        <li><strong>行业格局</strong>：中国大陆面板产能占全球60%+，但周期性波动大，盈利能力不稳定</li>
+        <li><strong>政策风险</strong>：中美科技摩擦可能影响设备进口和海外市场准入</li>
+        <li><strong>结论</strong>：OLED概念提供中期想象空间，但短期基本面支撑不足，需警惕估值回归风险</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="detail-section">
+    <h3 class="collapse-toggle" onclick="toggleCollapse('sent-detail')">💹 情绪面分析 <span style="font-size:12px;color:#6b7280">（点击展开/折叠）</span></h3>
+    <div id="sent-detail" class="collapse-content" style="max-height:500px">
+      <ul>
+        <li><strong>5月26日跌停</strong>：单日跌幅超9%，触发市场恐慌情绪，技术派止损盘涌出</li>
+        <li><strong>主力资金</strong>：5月26-27日放量下跌，主力净流出明显，机构减仓迹象显著</li>
+        <li><strong>散户情绪</strong>：OLED概念吸引散户跟风，但跌停后信心受挫，短期情绪修复需时</li>
+        <li><strong>融资余额</strong>：融资买入占比偏高，若继续下跌可能触发强制平仓，加剧下行</li>
+        <li><strong>市场热点</strong>：OLED/苹果供应链概念是近期市场关注焦点，但已部分price in</li>
+        <li><strong>结论</strong>：短期情绪转弱，主力出货迹象明显，建议等待情绪稳定后再考虑加仓</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="detail-section">
+    <h3>⚖️ 多空辩论结论</h3>
+    <table class="arg-table">
+      <tr><th>维度</th><th>多头论点（权重）</th><th>空头论点（权重）</th></tr>
+      <tr class="arg-bull"><td>OLED业务</td><td>OLED需求爆发，成都产线2026下半年投产（7/10）</td><td>OLED短期无法贡献利润，认证不确定性高（8/10）</td></tr>
+      <tr class="arg-bear"><td>估值</td><td>面板龙头享有估值溢价，PE 34x合理（5/10）</td><td>PE 34.80x vs ROE 4.63%，估值严重偏高（9/10）</td></tr>
+      <tr class="arg-bull"><td>行业地位</td><td>全球面板产能第一，中国大陆占60%+（6/10）</td><td>面板周期下行，TV价格跌破$110（8/10）</td></tr>
+      <tr class="arg-bear"><td>技术面</td><td>均线多头排列，中期趋势向上（4/10）</td><td>RSI超买，5月26日跌停，技术面转弱（8/10）</td></tr>
+      <tr class="arg-bull"><td>机构态度</td><td>部分机构看好OLED转型（5/10）</td><td>机构目标价4.81元，低于当前价13.95%（7/10）</td></tr>
+    </table>
+    <div style="margin-top:12px;padding:10px;background:#f0f9ff;border-radius:8px;font-size:13px">
+      <strong>研究主管裁决</strong>：多头论点权重偏低（平均5.4/10），空头论点权重较高（平均8.0/10）。<strong>结论：SELL</strong>，但保留部分仓位博弈OLED概念中期机会。
+    </div>
+  </div>
+
+  <div class="detail-section">
+    <h3>📋 最终操作方案（风险主管裁决版）</h3>
+    <table class="arg-table">
+      <tr><th>操作批次</th><th>出场价</th><th>减仓比例</th><th>剩余仓位</th><th>触发条件</th></tr>
+      <tr><td>第一批</td><td>5.50-5.70元</td><td>40%</td><td>60%</td><td>当前价附近（立即执行）</td></tr>
+      <tr><td>第二批</td><td>5.20-5.40元</td><td>30%</td><td>30%</td><td>回调至MA10支撑</td></tr>
+      <tr><td>第三批</td><td>4.90-5.10元</td><td>20%</td><td>10%（底仓）</td><td>回调至MA20强支撑</td></tr>
+      <tr><td>清仓线</td><td>跌破4.80元</td><td>100%</td><td>0%</td><td>MA20失守，中期趋势转弱</td></tr>
+    </table>
+    <div style="margin-top:12px">
+      <strong>重新加仓信号</strong>：
+      <ul style="margin-top:6px">
+        <li>✅ 突破6.09元（前期高点）+ 放量</li>
+        <li>✅ OLED出货量同比增长&gt;30%</li>
+        <li>✅ 面板价格突破$150（TV 55寸）</li>
+        <li>✅ 机构上调目标价至5.50元以上</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="detail-section">
+    <h3>⚠️ 关键风险与催化剂</h3>
+    <div class="chart-row">
+      <div>
+        <h4 style="font-size:14px;color:#ef4444;margin:0 0 8px 0">📉 下行风险</h4>
+        <ul style="font-size:13px">
+          <li><strong>估值回归风险</strong>：PE回归15-20x，股价可能跌至3.50-4.00元（-30~-40%）</li>
+          <li><strong>面板周期下行</strong>：TV面板价格若跌破$100，毛利率将显著恶化</li>
+          <li><strong>OLED不及预期</strong>：成都产线认证进展缓慢，短期无法贡献利润</li>
+          <li><strong>融资盘平仓</strong>：若继续下跌，高融资余额可能触发强制平仓，加剧下行</li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="font-size:14px;color:#10b981;margin:0 0 8px 0">📈 上行催化剂</h4>
+        <ul style="font-size:13px">
+          <li><strong>OLED产线投产</strong>：成都AMOLED产线2026下半年投产，通过苹果认证</li>
+          <li><strong>面板价格复苏</strong>：TV面板价格反弹至$130+，公司盈利能力改善</li>
+          <li><strong>机构上调评级</strong>：主流机构上调至"买入"，目标价上调至6.00元+</li>
+          <li><strong>突破前期高点</strong>：放量突破6.09元，技术面确认新一轮上涨</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="disclaimer">
+  <strong>⚠️ 免责声明</strong>：本报告由 AI（交易分析团队主理人 He）基于 WeStock Data 金融数据服务生成的公开市场信息整理而成，仅供参考，不构成任何投资建议或个股推荐。投资有风险，决策需谨慎。数据来源：WeStock Data API、腾讯自选股、公司财报、机构研报。报告生成时间：2026年6月4日。
+</div>
+
+<script>
+// ============ 数据 ============
+const klineData = [
+  {date:"2026-03-09",close:4.31},{date:"2026-03-10",close:4.35},{date:"2026-03-11",close:4.39},
+  {date:"2026-03-12",close:4.42},{date:"2026-03-13",close:4.36},{date:"2026-03-16",close:4.23},
+  {date:"2026-03-17",close:4.18},{date:"2026-03-18",close:4.20},{date:"2026-03-19",close:4.09},
+  {date:"2026-03-20",close:4.08},{date:"2026-03-23",close:3.87},{date:"2026-03-24",close:4.00},
+  {date:"2026-03-25",close:3.99},{date:"2026-03-26",close:3.94},{date:"2026-03-27",close:3.95},
+  {date:"2026-03-30",close:3.94},{date:"2026-03-31",close:3.91},{date:"2026-04-01",close:4.01},
+  {date:"2026-04-02",close:3.95},{date:"2026-04-03",close:3.93},{date:"2026-04-07",close:3.91},
+  {date:"2026-04-08",close:3.95},{date:"2026-04-09",close:4.01},{date:"2026-04-10",close:4.04},
+  {date:"2026-04-13",close:4.03},{date:"2026-04-14",close:4.02},{date:"2026-04-15",close:4.00},
+  {date:"2026-04-16",close:4.03},{date:"2026-04-17",close:4.02},{date:"2026-04-20",close:4.19},
+  {date:"2026-04-21",close:4.22},{date:"2026-04-22",close:4.27},{date:"2026-04-23",close:4.19},
+  {date:"2026-04-24",close:4.13},{date:"2026-04-27",close:4.21},{date:"2026-04-28",close:4.15},
+  {date:"2026-04-29",close:4.17},{date:"2026-04-30",close:4.08},{date:"2026-05-06",close:4.18},
+  {date:"2026-05-07",close:4.21},{date:"2026-05-08",close:4.17},{date:"2026-05-11",close:4.19},
+  {date:"2026-05-12",close:4.17},{date:"2026-05-13",close:4.23},{date:"2026-05-14",close:4.22},
+  {date:"2026-05-15",close:4.14},{date:"2026-05-18",close:4.21},{date:"2026-05-19",close:4.31},
+  {date:"2026-05-20",close:4.26},{date:"2026-05-21",close:4.69},{date:"2026-05-22",close:5.16},
+  {date:"2026-05-25",close:5.27},{date:"2026-05-26",close:5.77},{date:"2026-05-27",close:5.72},
+  {date:"2026-05-28",close:5.68},{date:"2026-05-29",close:5.11},{date:"2026-06-01",close:5.36},
+  {date:"2026-06-02",close:5.47},{date:"2026-06-03",close:5.59},{date:"2026-06-04",close:5.60}
+];
+
+// 计算SMA
+function calcSMA(data, period) {
+  return data.map((_, i) => {
+    if (i < period - 1) return null;
+    let sum = 0;
+    for (let j = i - period + 1; j <= i; j++) sum += data[j].close;
+    return +(sum / period).toFixed(2);
+  });
+}
+
+const labels = klineData.map(d => d.date.slice(5)); // MM-DD
+const closePrices = klineData.map(d => d.close);
+const sma20 = calcSMA(klineData, 20);
+const sma60 = calcSMA(klineData, 60);
+
+// ============ 图1：价格走势 ============
+new Chart(document.getElementById('priceChart'), {
+  type: 'line',
+  data: {
+    labels: labels,
+    datasets: [
+      {
+        label: '收盘价',
+        data: closePrices,
+        borderColor: '#1f2937',
+        backgroundColor: 'rgba(31,41,55,0.1)',
+        fill: true,
+        tension: 0.3,
+        pointRadius: 1,
+        borderWidth: 1.5
+      },
+      {
+        label: 'SMA20',
+        data: sma20,
+        borderColor: '#3b82f6',
+        borderWidth: 1.5,
+        pointRadius: 0,
+        borderDash: [5,3]
+      },
+      {
+        label: 'SMA60',
+        data: sma60,
+        borderColor: '#8b5cf6',
+        borderWidth: 1.5,
+        pointRadius: 0,
+        borderDash: [2,2]
+      },
+      {
+        label: '目标价(5.10)',
+        data: new Array(labels.length).fill(null).map((_,i) => i >= 45 ? 5.10 : null),
+        borderColor: '#10b981',
+        borderWidth: 1,
+        pointRadius: 0,
+        borderDash: [5,5]
+      },
+      {
+        label: '止损价(5.00)',
+        data: new Array(labels.length).fill(null).map((_,i) => i >= 45 ? 5.00 : null),
+        borderColor: '#ef4444',
+        borderWidth: 1,
+        pointRadius: 0,
+        borderDash: [5,5]
+      },
+      {
+        label: '强止损(4.80)',
+        data: new Array(labels.length).fill(null).map((_,i) => i >= 45 ? 4.80 : null),
+        borderColor: '#ef4444',
+        borderWidth: 1,
+        pointRadius: 0,
+        borderDash: [3,3]
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { position: 'bottom', labels: { font: { size: 11 } } }
+    },
+    scales: {
+      y: { beginAtZero: false, min: 3.5, grid: { color: '#f3f4f6' } },
+      x: { ticks: { font: { size: 9 }, maxRotation: 45 }, grid: { display: false } }
+    }
+  }
+});
+
+// ============ 图2：雷达图 ============
+new Chart(document.getElementById('radarChart'), {
+  type: 'radar',
+  data: {
+    labels: ['技术面', '基本面', '新闻面', '情绪面', '风险面'],
+    datasets: [{
+      label: '综合评分',
+      data: [4, 4, 5.5, 5, 3.5],
+      backgroundColor: 'rgba(59,130,246,0.2)',
+      borderColor: '#3b82f6',
+      borderWidth: 2,
+      pointBackgroundColor: '#3b82f6'
+    }]
+  },
+  options: {
+    responsive: true,
+    scales: {
+      r: { min: 0, max: 10, ticks: { stepSize: 2 } }
+    },
+    plugins: { legend: { display: false } }
+  }
+});
+
+// ============ 图3：多头论点 ============
+new Chart(document.getElementById('bullChart'), {
+  type: 'bar',
+  data: {
+    labels: ['OLED业务增长', '行业龙头地位', '机构看好转型', '技术面多头排列', '苹果供应链预期'],
+    datasets: [{
+      label: '多头论点权重',
+      data: [7, 6, 5, 4, 5],
+      backgroundColor: 'rgba(16,185,129,0.6)',
+      borderColor: '#10b981',
+      borderWidth: 1
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { min: 0, max: 10, grid: { color: '#f3f4f6' } },
+      y: { ticks: { font: { size: 11 } } }
+    }
+  }
+});
+
+// ============ 图4：空头论点 ============
+new Chart(document.getElementById('bearChart'), {
+  type: 'bar',
+  data: {
+    labels: ['估值过高PE34x', 'ROE偏低4.63%', '技术面转弱', '面板周期下行', '机构目标价偏低'],
+    datasets: [{
+      label: '空头论点权重',
+      data: [9, 8, 8, 8, 7],
+      backgroundColor: 'rgba(239,68,68,0.6)',
+      borderColor: '#ef4444',
+      borderWidth: 1
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { min: 0, max: 10, grid: { color: '#f3f4f6' } },
+      y: { ticks: { font: { size: 11 } } }
+    }
+  }
+});
+
+// ============ 图5：风险评估雷达 ============
+new Chart(document.getElementById('riskRadar'), {
+  type: 'radar',
+  data: {
+    labels: ['上行潜力', '下行风险', '不确定性', '时间成本', '安全边际'],
+    datasets: [
+      {
+        label: '激进派',
+        data: [8, 4, 7, 3, 5],
+        backgroundColor: 'rgba(239,68,68,0.15)',
+        borderColor: '#ef4444',
+        borderWidth: 2
+      },
+      {
+        label: '保守派',
+        data: [3, 9, 4, 2, 2],
+        backgroundColor: 'rgba(16,185,129,0.15)',
+        borderColor: '#10b981',
+        borderWidth: 2
+      },
+      {
+        label: '中性派',
+        data: [6, 6, 6, 5, 5],
+        backgroundColor: 'rgba(245,158,11,0.15)',
+        borderColor: '#f59e0b',
+        borderWidth: 2
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    scales: {
+      r: { min: 0, max: 10, ticks: { stepSize: 2 } }
+    },
+    plugins: { legend: { position: 'bottom' } }
+  }
+});
+
+// ============ 折叠功能 ============
+function toggleCollapse(id) {
+  const el = document.getElementById(id);
+  if (el.style.maxHeight === '0px' || el.style.maxHeight === '') {
+    el.style.maxHeight = '500px';
+  } else {
+    el.style.maxHeight = '0px';
+  }
+}
+// 默认展开第一个
+document.getElementById('tech-detail').style.maxHeight = '500px';
+</script>

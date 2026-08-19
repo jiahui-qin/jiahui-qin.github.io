@@ -5,6 +5,7 @@ tags:
 - gin
 - selFund
 categories:
+- 技术
 - go
 ---
 

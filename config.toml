@@ -1,14 +1,16 @@
 baseURL = 'https://jiahui-qin.github.io/'
 languageCode = 'zh-cn'
-title = '我的技术博客'
+title = '我的博客'
 theme = 'PaperMod'
 defaultContentLanguage = 'zh-cn'
 enableRobotsTXT = true
 
 [params]
   author = 'jiahui-qin'
-  description = '记录技术成长，分享编程心得'
-  homeInfoParams = {}
+  description = '记录技术成长，分享编程心得与投资分析'
+  [params.homeInfoParams]
+    Title = '我的博客'
+    Content = '记录技术成长，分享编程心得与投资分析。这里既有 Go/Java/Python 后端开发的踩坑笔记，也有 ETF、个股的投资分析报告。'
   ShowReadingTime = true
   ShowShareButtons = true
   ShowPostNavLinks = true
@@ -29,18 +31,26 @@ enableRobotsTXT = true
     url = '/'
     weight = 1
   [[menu.main]]
+    name = '技术'
+    url = '/categories/%E6%8A%80%E6%9C%AF/'
+    weight = 2
+  [[menu.main]]
+    name = '投资'
+    url = '/categories/%E6%8A%95%E8%B5%84%E5%88%86%E6%9E%90/'
+    weight = 3
+  [[menu.main]]
     name = '归档'
     url = '/posts/'
-    weight = 2
+    weight = 4
   [[menu.main]]
     name = '分类'
     url = '/categories/'
-    weight = 3
+    weight = 5
   [[menu.main]]
     name = '标签'
     url = '/tags/'
-    weight = 4
+    weight = 6
   [[menu.main]]
     name = '关于'
     url = '/about/'
-    weight = 5
+    weight = 7

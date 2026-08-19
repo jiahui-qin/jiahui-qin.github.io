@@ -5,6 +5,7 @@ tags:
 - feign
 - spring cloud
 categories:
+- 技术
 - develop
 ---
 

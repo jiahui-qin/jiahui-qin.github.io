@@ -5,6 +5,7 @@ tags:
 - go
 - telegram
 categories:
+- 技术
 - 指南
 ---
 

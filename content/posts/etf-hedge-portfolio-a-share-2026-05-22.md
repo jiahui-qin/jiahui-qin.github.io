@@ -1,10 +1,15 @@
 ---
-title: "ETF对冲组合A股版（2026-05-22）"
+title: ETF对冲组合A股版（2026-05-22）
 date: 2026-05-22
 draft: false
-description: "面向A股市场的ETF对冲组合方案，含行业轮动对冲、风格对冲、期指对冲三种策略"
-tags: ["ETF对冲", "A股策略", "行业轮动", "风险对冲"]
-categories: ["投资策略"]
+description: 面向A股市场的ETF对冲组合方案，含行业轮动对冲、风格对冲、期指对冲三种策略
+tags:
+- ETF对冲
+- A股策略
+- 行业轮动
+- 风险对冲
+categories:
+- 投资分析
 ---
 
 # ETF对冲组合A股版

@@ -6,6 +6,7 @@ tags:
 - hexo
 - blog
 categories:
+- 技术
 - 指南
 ---
 

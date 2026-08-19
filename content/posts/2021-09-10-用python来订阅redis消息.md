@@ -4,6 +4,7 @@ date: 2021-09-10 18:59:34
 tags:
 - python
 categories:
+- 技术
 - python小工具
 ---
 

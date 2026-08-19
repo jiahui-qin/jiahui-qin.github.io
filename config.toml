@@ -39,18 +39,22 @@ enableRobotsTXT = true
     url = '/categories/%E6%8A%95%E8%B5%84%E5%88%86%E6%9E%90/'
     weight = 3
   [[menu.main]]
+    name = '观影'
+    url = 'https://jiahui-qin.github.io/upgraded-octo-guide/'
+    weight = 4
+  [[menu.main]]
     name = '归档'
     url = '/posts/'
-    weight = 4
+    weight = 5
   [[menu.main]]
     name = '分类'
     url = '/categories/'
-    weight = 5
+    weight = 6
   [[menu.main]]
     name = '标签'
     url = '/tags/'
-    weight = 6
+    weight = 7
   [[menu.main]]
     name = '关于'
     url = '/about/'
-    weight = 7
+    weight = 8

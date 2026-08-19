@@ -5,6 +5,7 @@ tags:
 - MyBatis-Plus
 - Java
 categories:
+- 技术
 - backend
 ---
 

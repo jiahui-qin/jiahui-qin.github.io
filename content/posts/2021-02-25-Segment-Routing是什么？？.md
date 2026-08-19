@@ -4,6 +4,7 @@ date: 2021-02-25 18:57:16
 tags:
 - Segment Routing
 categories:
+- 技术
 - 网络
 ---
 

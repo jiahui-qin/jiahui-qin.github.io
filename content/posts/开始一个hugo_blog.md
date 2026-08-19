@@ -1,9 +1,13 @@
 ---
-title: "开始一个hugo blog"
-date: 2023-05-19T16:52:59+08:00
+title: 开始一个hugo blog
+date: 2023-05-19 16:52:59+08:00
 draft: false
-tags: ["hugo", "blog"]
-categories: ["教程"]
+tags:
+- hugo
+- blog
+categories:
+- 技术
+- 教程
 ---
 
 被hexo blog折磨的死去活来，干脆换一个！

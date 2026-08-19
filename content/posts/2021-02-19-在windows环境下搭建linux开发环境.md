@@ -6,6 +6,7 @@ tags:
 - wsl2
 - Ubuntu
 categories:
+- 技术
 - 指南
 ---
 

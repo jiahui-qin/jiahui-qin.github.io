@@ -5,6 +5,7 @@ tags:
 - mysql
 - redis
 categories:
+- 技术
 - develop
 ---
 
